@@ -1,3 +1,5 @@
+<p align="center"><img width="50%" height="100%" alt="logo" src="https://github.com/user-attachments/assets/00ce920d-1daf-4432-8b50-b640c3d8f3c1" /></p>
+
 # Malward VPS — threat database status
 
 This repository publicly displays the current version numbers of Malward VPS security databases.
