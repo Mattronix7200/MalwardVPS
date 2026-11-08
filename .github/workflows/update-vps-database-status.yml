@@ -2,8 +2,7 @@ name: Update VPS database status
 
 on:
   schedule:
-    # Every hour, at minute 17. GitHub may delay scheduled runs during high load.
-    - cron: '20 * * * *'
+    - cron: '25 * * * *'
   workflow_dispatch:
 
 permissions:
