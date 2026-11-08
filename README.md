@@ -1,25 +1,25 @@
-# Malward VPS — status baz zagrożeń
+# Malward VPS — threat database status
 
-Ten projekt publicznie pokazuje aktualne numery wersji baz ochronnych Malward VPS.
-Tabela jest automatycznie odświeżana co godzinę przez GitHub Actions na podstawie publicznego
-endpointu `https://malward-api.jmsoft.pl/public/databases.json`.
+This repository publicly displays the current version numbers of Malward VPS security databases.
+The table is automatically refreshed hourly by GitHub Actions from the public endpoint
+`https://malward-api.jmsoft.pl/public/databases.json`.
 
-Nowy commit jest tworzony tylko wtedy, gdy co najmniej jedna wersja bazy się zmieni.
+A new commit is created only when at least one database version changes.
 
 <!-- VPS_DATABASE_STATUS:START -->
-| Baza | Wersja | Zmiana wykryta (UTC) |
+| Database | Version | Change detected (UTC) |
 | --- | --- | --- |
-| Pakiet baz | `—` | — |
-| Sygnatury VPS | `—` | — |
-| Lista zaufanych wpisów | `—` | — |
-| Baza złośliwych URL | `—` | — |
-| Reguły heurystyczne | `—` | — |
-| Baza Bot IP | `—` | — |
-| Pamięć podręczna URL | `—` | — |
+| Database bundle | `—` | — |
+| VPS signatures | `—` | — |
+| Trusted entries | `—` | — |
+| Malicious URL database | `—` | — |
+| Heuristic rules | `—` | — |
+| Bot IP database | `—` | — |
+| URL cache | `—` | — |
 <!-- VPS_DATABASE_STATUS:END -->
 
-## Jak działa aktualizacja
+## How updates work
 
-Workflow `.github/workflows/update-vps-database-status.yml` uruchamia się co godzinę. Skrypt
-`.github/scripts/update_vps_versions.py` pobiera metadane publicznego pakietu baz, porównuje je z
-tabelą powyżej i aktualizuje wyłącznie zmienione wersje.
+The `.github/workflows/update-vps-database-status.yml` workflow runs hourly. The
+`.github/scripts/update_vps_versions.py` script retrieves the public database-bundle metadata,
+compares it with the table above, and updates only changed versions.
