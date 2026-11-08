@@ -51,8 +51,17 @@ def existing_timestamps(table: str) -> dict[str, tuple[str, str]]:
     return rows
 
 
+def display_timestamp(timestamp: str) -> str:
+    """Render an existing ISO timestamp in the compact README format."""
+    try:
+        parsed = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+        return parsed.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    except ValueError:
+        return timestamp
+
+
 def render_table(payload: dict, old_rows: dict[str, tuple[str, str]]) -> str:
-    now = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     versions = dict(payload.get("databases") or {})
     versions["bundle"] = {"version": payload.get("version", "—")}
 
@@ -65,7 +74,7 @@ def render_table(payload: dict, old_rows: dict[str, tuple[str, str]]) -> str:
         value = versions.get(key, {})
         version = str(value.get("version") or "—")
         previous = old_rows.get(label)
-        changed_at = previous[1] if previous and previous[0] == version else now
+        changed_at = display_timestamp(previous[1]) if previous and previous[0] == version else now
         lines.append(f"| {label} | `{version}` | {changed_at} |")
     lines.append(END_MARKER)
     return "\n".join(lines)
