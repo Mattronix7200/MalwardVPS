@@ -9,13 +9,13 @@ A new commit is created only when at least one database version changes.
 <!-- VPS_DATABASE_STATUS:START -->
 | Database | Version | Change detected (UTC) |
 | --- | --- | --- |
-| Database bundle | `1.1.0.40.110826` | 2026-11-08T15:21:18Z |
-| VPS signatures | `1.2.0.793.110826` | 2026-11-08T15:21:18Z |
-| Trusted entries | `1.0.0.796.110826` | 2026-11-08T15:21:18Z |
-| Malicious URL database | `1.1.1.185.110826` | 2026-11-08T15:21:18Z |
-| Heuristic rules | `1.0.0.414.110826` | 2026-11-08T15:21:18Z |
-| Bot IP database | `1.0.0.636.110826` | 2026-11-08T15:21:18Z |
-| URL cache | `1.0.0.630.110826` | 2026-11-08T15:21:18Z |
+| Database bundle | `1.1.0.40.110826` | 2026-11-08 15:24 UTC |
+| VPS signatures | `1.2.0.793.110826` | 2026-11-08 15:24 UTC |
+| Trusted entries | `1.0.0.796.110826` | 2026-11-08 15:24 UTC |
+| Malicious URL database | `1.1.1.185.110826` | 2026-11-08 15:24 UTC |
+| Heuristic rules | `1.0.0.414.110826` | 2026-11-08 15:24 UTC |
+| Bot IP database | `1.0.0.636.110826` | 2026-11-08 15:24 UTC |
+| URL cache | `1.0.0.630.110826` | 2026-11-08 15:24 UTC |
 <!-- VPS_DATABASE_STATUS:END -->
 
 ## How updates work
@@ -23,3 +23,46 @@ A new commit is created only when at least one database version changes.
 The `.github/workflows/update-vps-database-status.yml` workflow runs hourly. The
 `.github/scripts/update_vps_versions.py` script retrieves the public database-bundle metadata,
 compares it with the table above, and updates only changed versions.
+
+## Download the database bundle
+
+The current bundle version is available as plain text at:
+
+```text
+https://malward-api.jmsoft.pl/public/databases.version
+```
+
+The complete database bundle is available here:
+
+```text
+https://malward-api.jmsoft.pl/public/malward-databases.zip
+```
+
+The recommended way to install the bundle is through the Malward application's **Import database
+bundle** feature. For an offline or recovery installation, close Malward before copying files and
+run the following PowerShell commands. The example installs the **medium** URL-protection profile.
+
+```powershell
+$api = 'https://malward-api.jmsoft.pl/public'
+$profile = 'medium' # choose: low, medium, or high
+$version = (Invoke-RestMethod "$api/databases.version").Trim()
+$zip = Join-Path $env:TEMP "malward-databases-$version.zip"
+$staging = Join-Path $env:TEMP "malward-databases-$version"
+$target = Join-Path $env:ProgramData 'Malward\data'
+
+Invoke-WebRequest "$api/malward-databases.zip" -OutFile $zip
+New-Item -ItemType Directory -Force -Path $staging, $target | Out-Null
+Expand-Archive -LiteralPath $zip -DestinationPath $staging -Force
+
+# Copy the common databases.
+Get-ChildItem $staging -Filter '*.vdeb' |
+    Where-Object { $_.Name -notlike 'urls-*.vdeb' } |
+    Copy-Item -Destination $target -Force
+
+# Install the selected URL-protection profile using the filename expected by Malward.
+Copy-Item (Join-Path $staging "urls-$profile.vdeb") (Join-Path $target 'urls.vdeb') -Force
+
+Write-Host "Installed database bundle version $version to $target"
+```
+
+The target folder is normally `C:\ProgramData\Malward\data`.
