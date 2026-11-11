@@ -11,13 +11,13 @@ A new commit is created only when at least one database version changes.
 <!-- VPS_DATABASE_STATUS:START -->
 | Database | Version | Change detected (UTC) |
 | --- | --- | --- |
-| Database bundle | `1.1.0.97.111126` | 2026-11-11 06:52 UTC |
-| VPS signatures | `1.2.0.846.111126` | 2026-11-11 06:52 UTC |
-| Trusted entries | `1.0.0.850.111126` | 2026-11-11 06:52 UTC |
-| Malicious URL database | `1.1.1.239.111126` | 2026-11-11 06:52 UTC |
-| Heuristic rules | `1.0.0.468.111126` | 2026-11-11 06:52 UTC |
-| Bot IP database | `1.0.0.690.111126` | 2026-11-11 06:52 UTC |
-| URL cache | `1.0.0.684.111126` | 2026-11-11 06:52 UTC |
+| Database bundle | `1.1.0.106.111126` | 2026-11-11 15:29 UTC |
+| VPS signatures | `1.2.0.855.111126` | 2026-11-11 15:29 UTC |
+| Trusted entries | `1.0.0.859.111126` | 2026-11-11 15:29 UTC |
+| Malicious URL database | `1.1.1.248.111126` | 2026-11-11 15:29 UTC |
+| Heuristic rules | `1.0.0.477.111126` | 2026-11-11 15:29 UTC |
+| Bot IP database | `1.0.0.699.111126` | 2026-11-11 15:29 UTC |
+| URL cache | `1.0.0.693.111126` | 2026-11-11 15:29 UTC |
 <!-- VPS_DATABASE_STATUS:END -->
 
 ## How updates work
